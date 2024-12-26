@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Wait for connection
+      wait_for_connection:
+        sleep: 10
+        timeout: 600
+
+
+- name: Include another playbook
+  ansible.builtin.import_playbook: ../../playbook.yaml

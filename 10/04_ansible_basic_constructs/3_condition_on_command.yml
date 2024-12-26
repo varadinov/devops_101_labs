@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: False
+
+  tasks:
+    - name: Check if httpd is installed
+      shell: "rpm -qa | grep httpd || true"
+      changed_when: no
+      ignore_errors: yes
+      register: check_httpd
+
+    - name: Create index 
+      copy:
+        content: "hello world!"
+        dest: "/var/www/html/index.html"
+      when: check_httpd.stdout != ""
+    
+  

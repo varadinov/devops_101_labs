@@ -1,0 +1,82 @@
+---
+- name: Install a web server and configure index.html
+  hosts: webservers
+  gather_facts: yes
+  become: true
+
+  vars:
+    web_server: apache2
+    index_template: templates/index.html.j2
+
+  tasks:
+    - name: Ensure the web server is installed
+      apt:
+        name: "{{ web_server }}"
+        state: present
+        update_cache: true
+
+    - name: Ensure the web server is running
+      service:
+        name: "{{ web_server }}"
+        state: started
+        enabled: true
+
+    - name: Deploy index.html from template
+      template:
+        src: "{{ index_template }}"
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      notify:
+        - Restart web server
+
+  handlers:
+    - name: Restart web server
+      service:
+        name: "{{ web_server }}"
+        state: restarted
+
+- name: Set up Nginx as a load balancer
+  hosts: loadbalancers
+  gather_facts: yes
+  become: true
+
+  vars:
+    nginx_config_template: templates/nginx.conf.j2
+    upstream_servers: "{{ groups['webservers'] | map('extract', hostvars, 'ansible_default_ipv4') | list }}"
+
+  tasks:
+    
+    - name: Ensure Nginx is installed
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Deploy Nginx load balancer configuration
+      template:
+        src: "{{ nginx_config_template }}"
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart Nginx
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
+     
+    - name: Print LB IP address
+      ansible.builtin.debug:
+        var: ansible_facts['default_ipv4']['address']
+
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  ###############################################
+  gather_facts: True
+  ###############################################
+  # ansible all -m setup -i inventory/
+
+  vars:
+    centos_based_os:
+      - RedHat
+      - Amazon
+    
+    debian_based_os:
+      - Debian
+      - Ubuntu
+
+  tasks:
+    - name: Install httpd if centos based
+      yum:
+        name: httpd
+        state: present
+      when: ansible_facts['distribution'] in centos_based_os
+
+    - name: Install httpd if debian based
+      apt:
+        name: apache2
+        state: present
+      when: ansible_facts['distribution'] in debian_based_os
+
+         
+  

@@ -1,0 +1,26 @@
+FROM docker.io/library/ubuntu:24.04
+
+{% if item.env is defined %}
+{% for var, value in item.env.items() %}
+{% if value %}
+ENV {{ var }} {{ value }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install --no-install-recommends -y \
+    software-properties-common rsyslog systemd systemd-cron sudo python3 sudo bash ca-certificates iproute2 python3-apt aptitude rsync && \
+    apt-get clean && \
+    rm -Rf /usr/share/doc && rm -Rf /usr/share/man && \
+    rm -rf /var/lib/apt/lists/* && \
+    sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf && \
+    rm -f /lib/systemd/system/systemd*udev* && \
+    rm -f /lib/systemd/system/getty.target
+
+STOPSIGNAL SIGRTMIN+3
+
+VOLUME ["/sys/fs/cgroup"]
+CMD ["/sbin/init"]
+    

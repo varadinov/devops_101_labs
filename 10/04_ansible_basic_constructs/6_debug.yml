@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: True
+
+  tasks:
+    - debug:
+        msg: "{{ ansible_facts['distribution'] }}"
+    
+    - debug:
+        var: ansible_facts['distribution']
+    
+    # This will start an interactive debugger
+    # You can use task_vars to see the variables
+    # Example task_vars['ansible_facts']['distribution']
+    - debug:
+        var: ansible_facts
+      debugger: always
+    
+  

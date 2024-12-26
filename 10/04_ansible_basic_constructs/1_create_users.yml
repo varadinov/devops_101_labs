@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: False
+
+  tasks:
+    - name: Create user bobi
+      user:
+        name: bobi
+        state: present
+
+    - name: Create user deyan
+      user:
+        name: deyan
+        state: present
+
+    - name: Create user jesse
+      user:
+        name: jesse
+        state: present
+
+    - name: Create user alex
+      user:
+        name: alex
+        state: present
+
+    - name: Create user ilir
+      user:
+        name: ilir
+        state: present
+
+    - name: Create user daniel
+      user:
+        name: daniel
+        state: present

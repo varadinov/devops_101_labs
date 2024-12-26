@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  ###############################################
+  gather_facts: True
+  ###############################################
+  # ansible all -m setup -i inventory/
+
+  vars:
+    supported_os:
+      - Debian
+      - Ubuntu
+
+  tasks:
+    - name: Install, configure, and start Apache
+      block:
+        - name: Install httpd and memcached
+          apt:
+            name:
+            - apache2
+            - memcached
+            state: present
+    
+        - name: Start httpd service
+          service:
+            name: apache2
+            state: started
+            enabled: True
+            
+      when: ansible_facts['distribution'] in supported_os
+
+      

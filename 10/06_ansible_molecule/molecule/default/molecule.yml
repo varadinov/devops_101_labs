@@ -1,0 +1,73 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: web01
+    groups:
+    - webservers    
+    image: ubuntu:24.04
+    # This will use the template file Dockerfile.j2
+    # It will build a suitable image with systemd to emulate virtual machine
+    dockerimage: Dockerfile.j2
+    # Privileged, tmp and run required for systemd in container
+    privileged: true
+    tmpfs:
+      - /run
+      - /tmp
+    # Cgroups are also required for systemd
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    pre_build_image: false
+    # Do not override the original docker CMD
+    # Since this a systemd image,
+    # We don't need to put a dummy script to keep the container running
+    override_command: false
+  - name: web02
+    groups:
+      - webservers  
+    image: ubuntu:24.04
+    command: "/bin/sh -c 'while sleep 3600; do :; done'"
+    privileged: true
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    pre_build_image: false
+    override_command: false
+  - name: lb01
+    groups:
+      - loadbalancers
+    image: ubuntu:24.04
+    command: "/bin/sh -c 'while sleep 3600; do :; done'"
+    privileged: true
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    pre_build_image: false
+    override_command: false
+  - name: db01
+    groups:
+      - databases  
+    image: ubuntu:24.04
+    command: "/bin/sh -c 'while sleep 3600; do :; done'"
+    privileged: true
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    pre_build_image: false
+    override_command: false
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
