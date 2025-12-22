@@ -11,7 +11,7 @@ kubectl apply -f .
 ```bash
 kubectl describe deployment nginx-deployment
 ```
-**Note:** If you review carfully the description of the deployment, you will find that it relays on ReplicaSets. 
+**Note:** If you review carefully the description of the deployment, you will find that it relays on ReplicaSets. 
 
 * List replicasets
 ```bash
