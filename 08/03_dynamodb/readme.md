@@ -34,7 +34,7 @@ Create or update the secrets file for the Streamlit app:
 
 ```bash
 mkdir -p .streamlit
-echo 'table_name = "my-demo-tasks-22122025"' >> .streamlit/secrets.toml
+echo 'table_name = "my-demo-tasks-22122025"' > .streamlit/secrets.toml
 ```
 
 If you already have a `secrets.toml` file from previous demos, you can add the `table_name` line to it.

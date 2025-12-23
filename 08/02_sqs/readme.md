@@ -56,6 +56,7 @@ In a separate terminal, start the worker to process messages:
 cd 02_sqs
 uv run python worker.py my-demo-queue-22122025
 ```
+
 The worker will continuously poll the queue for messages and display them on the screen.
 
 ## How It Works
@@ -78,6 +79,6 @@ To delete the queue when done:
 QUEUE_URL=$(aws sqs get-queue-url --queue-name my-demo-queue-22122025 --region us-east-1 --query "QueueUrl" --output text)
 
 # Now delete the queue using that variable
-aws sqs delete-queue --queue-url "$QUEUE_URL"
+aws sqs delete-queue --queue-url "$QUEUE_URL"import boto3
 ```
 

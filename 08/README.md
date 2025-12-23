@@ -24,6 +24,12 @@ unzip awscliv2.zip
 ./aws/install -i ~/.local/aws-cli -b ~/.local/bin
 ```
 
+### AWS Profile configuration
+You need to create IAM user and generate access key. Then you can configure your profile. Run the command and fill the required keys and region us-east-1.
+```bash
+aws configure --profile demo 
+```
+
 ### Python Environment Setup
 
 This project uses `uv` for dependency management. Set up the virtual environment:
