@@ -157,15 +157,28 @@ cd ..
 ```
 
 ## Run 06_ansible_molecule
+This example uses molecule to create local environment in docker and converge it
 * Enter directory
 ```bash
-cd 05_ansible_dynamic_inventory
+cd 06_ansible_molecule
 ```
 
+* Execute molecule converge
 ```bash
-
-ansible-playbook web_servers.yml -i dynamic_inventory/ --key-file ~/.ssh/id_rsa_tofu
+molecule converge
 ```
+
+
+* Login to one of the containers
+```bash
+molecule login --host web01 
+```
+
+* Destroy the molecule environment
+```bash
+molecule destroy
+```
+
 
 * Enter parent directory
 ```bash

@@ -1,6 +1,6 @@
 # Configure AWS provider
 provider "aws" {
-  region = "us-east-2"
+  region = "us-east-1"
 }
 
 # Get Home path
@@ -18,9 +18,11 @@ resource "aws_key_pair" "ansible_key_pair" {
 resource "aws_instance" "webservers" {
   count = 2 # create three similar EC2 instances
   
-  ami           = "ami-036841078a4b68e14"
-  instance_type = "t2.micro"
-  security_groups = [ aws_security_group.allow_web_traffic.name ]
+  ami           = "ami-0ecb62995f68bb549"
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [
+    aws_security_group.allow_web_traffic.id
+  ]
   # Reference ansible key pair
   key_name = aws_key_pair.ansible_key_pair.key_name
   user_data = file("${path.module}/resources/user_data.sh")
