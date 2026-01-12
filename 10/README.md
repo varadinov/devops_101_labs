@@ -1,18 +1,17 @@
 # OpenTofu or Terraform 
-## Install tofuenv tool 
-Tofuenv is tool that helps you to manage the installation of OpenTofu.
+## Install tenv tool 
+tenv is used to manage which version of OpenTofu is installed and active in the environment. tenv makes it easy to install, switch between, and manage multiple versions of the tofu CLI, similar to how other version managers work.
 ```bash
 # Prereqs
 sudo apt update -y
 sudo apt install -y jq gnupg
-# Install tofuenv to local path $HOME/.tofuenv
-git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
-# Add tofuenv path
-echo 'export PATH="$HOME/.tofuenv/bin:$PATH"' >> ~/.bash_profile
+LATEST_VERSION=$(curl --silent https://api.github.com/repos/tofuutils/tenv/releases/latest | jq -r .tag_name)
+curl -O -L "https://github.com/tofuutils/tenv/releases/latest/download/tenv_${LATEST_VERSION}_amd64.deb"
+sudo dpkg -i "tenv_${LATEST_VERSION}_amd64.deb"
 ```
 ## Install OpenTofu with tofuenv
 ```bash
-tofuenv install latest
+tenv tofu install 1.10.6   
 ```
 ## Validate tofu is installed
 ```bash
