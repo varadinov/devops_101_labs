@@ -5,7 +5,7 @@
   gather_facts: False
 
   vars:
-    message: "I like Ansible :)"
+    message: "I like Ansible!"
 
   tasks:
     - name: Install apache

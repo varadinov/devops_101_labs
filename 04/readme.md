@@ -1,103 +1,85 @@
+# Setup
+
+This lab uses [uv](https://docs.astral.sh/uv/) to manage the Python environment and dependencies.
+
+Install uv if it is not already installed:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Create the virtual environment and install dependencies:
+
+```bash
+uv sync
+```
+
 # Environment Variables
 ## Review 01_environment_variables.py
 ```bash
 cat 01_environment_variables.py
 ```
 
-## Run main.py with provided environment variables
-```
-USERNAME=Bobby python 01_environment_automation.py
+## Run with provided environment variables
+```bash
+NICKNAME=Bobby uv run python 01_environment_variables.py
 ```
 
 # Configuration file
-## Review 02_config_file.py and config.json
+## Review 02_config_file.py and 02_config_file.json
 ```bash
 cat 02_config_file.py
 cat 02_config_file.json
 ```
 
 ## Run 02_config_file.py
+```bash
+uv run python 02_config_file.py
 ```
-python 02_config_file.py
-```
-
 
 # Simple Web App
-## Create python virtual environment
-```bash
-python -m venv .venv
-```
-
-## Activate python virtual environment
-**Note: ** you must activate the environment everytime you open the project
-```bash
-source .venv/bin/activate
-```
-## Install dependencies
-* Install streamlit - a simple library for python used to build quckly UI
-```bash
-pip install streamlit
-```
-
 ## Run web app
 ```bash
-streamlit run 03_simple_web_app.py
+uv run streamlit run 03_simple_web_app.py
 ```
 
 # Simple Web App with DB
-## Ensure .venv is create from the previous steps
-
-## Activate python virtual environment
-**Note: ** you must activate the environment everytime you open the project
-```bash
-source .venv/bin/activate
-```
-## Install dependencies
-* Install streamlit - a simple library for python used to build quckly UI
-```bash
-pip install sqlalchemy
-```
-
 ## Run web app
 ```bash
-streamlit run 04_simple_web_app.py
+uv run streamlit run 04_simple_web_app_with_db.py
 ```
-
 
 # Simple Pub/Sub app
-## Ensure .venv is create from the previous steps
-
-## Activate python virtual environment
-**Note: ** you must activate the environment everytime you open the project
-```bash
-source .venv/bin/activate
-```
-## Install dependencies
-* Install streamlit - a simple library for python used to build quckly UI
-```bash
-pip install persist-queue
-```
-
 ## Run simple queue subscriber
 ```bash
-python 05_simple_queue_subscriber.py
+uv run python 05_simple_queue_subscriber.py
 ```
 
 ## Run simple queue publisher
-**Note:** You need to open first another terminal
+**Note:** Open another terminal first
 ```bash
-streamlit run 05_simple_queue_publisher.py
+uv run streamlit run 05_simple_queue_publisher.py
 ```
 
 # Show threads on OS level
-## Run 
+## Run
 ```bash
-streamlit run 06_threads.py
+uv run python 06_threads.py
 ```
-## Copy the the command from the initial log msessage
-Show threads on OS level: ps -T -p XXXXXX
+
+## Copy the command from the initial log message
+Show threads on OS level: `ps -T -p XXXXXX`
 
 ## Execute the command in another terminal
 ```bash
 ps -T -p XXXXXX
 ```
+
+# Async
+## Run
+```bash
+uv run python 07_async.py
+```
+
+## Compare threads with async
+In another terminal, run the same `ps -T -p XXXXXX` command using the PID printed at startup and compare with the threads demo.

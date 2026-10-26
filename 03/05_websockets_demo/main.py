@@ -1,7 +1,8 @@
+import asyncio
+from datetime import datetime
+
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from datetime import datetime
-import asyncio
 
 app = FastAPI()
 
@@ -14,8 +15,9 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             # Sending current datetime every 30 seconds
+            print("Sending current server time")
             now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             await websocket.send_text(f"Current server time: {now}")
-            await asyncio.sleep(30)  # Wait for 30 seconds
+            await asyncio.sleep(10)  # Wait for 30 seconds
     except WebSocketDisconnect:
         print("Client disconnected")

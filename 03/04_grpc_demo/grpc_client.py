@@ -1,6 +1,7 @@
-import grpc
 import demo_pb2
 import demo_pb2_grpc
+import grpc
+
 
 # Connect to the gRPC server
 def run():

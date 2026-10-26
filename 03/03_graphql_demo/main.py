@@ -1,12 +1,10 @@
-import random
 import strawberry
+from databases import Database
 from fastapi import FastAPI
-from strawberry.fastapi import GraphQLRouter
-from typing import List, Optional
 from sqlalchemy import Column, Integer, String, create_engine, select
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session, sessionmaker
-from databases import Database
+from sqlalchemy.orm import sessionmaker
+from strawberry.fastapi import GraphQLRouter
 
 # SQLite in-memory database setup
 DATABASE_URL = "sqlite:///./test.db"
@@ -65,15 +63,15 @@ class MovieType:
 # MovieFilter input type to encapsulate optional filter fields
 @strawberry.input
 class MovieFilter:
-    year: Optional[int] = None
-    director: Optional[str] = None
-    writer: Optional[str] = None
+    year: int | None = None
+    director: str | None = None
+    writer: str | None = None
 
 # Query with dynamic filtering
 @strawberry.type
 class Query:
     @strawberry.field
-    async def movies(self, where: Optional[MovieFilter] = None) -> List[MovieType]:
+    async def movies(self, where: MovieFilter | None = None) -> list[MovieType]:
         db = SessionLocal()
         query = select(Movie)
         

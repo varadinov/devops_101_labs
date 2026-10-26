@@ -2,7 +2,7 @@
 - hosts: webservers
   remote_user: ubuntu
   become: yes
-  gather_facts: False
+  gather_facts: True
 
   vars:
     message: "I don't like the default message!"

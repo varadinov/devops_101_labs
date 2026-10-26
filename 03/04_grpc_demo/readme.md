@@ -1,16 +1,17 @@
-# Create python virtual environment
+# Setup
+
+This demo uses [uv](https://docs.astral.sh/uv/) to manage the Python environment and dependencies.
+
+Install uv if it is not already installed:
+
 ```bash
-python -m venv .venv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-# Activate python virtual environment
-```bash
-source .venv/bin/activate
-```
+Create the virtual environment and install dependencies:
 
-# Install the necessary gRPC tools by running:
 ```bash
-pip install grpcio grpcio-tools
+uv sync
 ```
 
 # Define the gRPC Service
@@ -53,7 +54,7 @@ message EchoResponse {
 This will generate two files: demo_pb2.py and demo_pb2_grpc.py, which will contain the necessary classes for implementing the gRPC client and server.
 
 ```bash
-python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. demo.proto
+uv run python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. demo.proto
 ```
 
 # Implement the gRPC Server 
@@ -61,10 +62,11 @@ Create file grpc_server.py
 
 ```python
 from concurrent import futures
-import grpc
+from datetime import datetime
+
 import demo_pb2
 import demo_pb2_grpc
-from datetime import datetime
+import grpc
 
 # The implementation of the gRPC service
 class DemoServiceServicer(demo_pb2_grpc.DemoServiceServicer):
@@ -97,9 +99,9 @@ if __name__ == '__main__':
 Create file grpc_client.py
 
 ```python
-import grpc
 import demo_pb2
 import demo_pb2_grpc
+import grpc
 
 # Connect to the gRPC server
 def run():
@@ -123,12 +125,13 @@ if __name__ == '__main__':
 ```
 
 # Run server
+
 ```bash
-python grpc_server.py
+uv run python grpc_server.py
 ```
 
-
 # Run client
+
 ```bash
-python grpc_client.py
+uv run python grpc_client.py
 ```

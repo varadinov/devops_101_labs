@@ -1,8 +1,10 @@
 from concurrent import futures
-import grpc
+from datetime import datetime
+
 import demo_pb2
 import demo_pb2_grpc
-from datetime import datetime
+import grpc
+
 
 # The implementation of the gRPC service
 class DemoServiceServicer(demo_pb2_grpc.DemoServiceServicer):

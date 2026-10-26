@@ -1,8 +1,8 @@
 # Run apps
 * Run the following commands. This will create two web app processes and send them in background.
 ```bash
-python app.py --port 9001 --name server1 &
-python app.py --port 9002 --name server2 &
+uv run app.py --port 9101 --name server1 &
+uv run app.py --port 9102 --name server2 &
 ```
 
 # Review the proxy config and run it
@@ -21,8 +21,8 @@ cat config.yaml
 
 # Open new terminal and run curl
 ```bash
-curl localhost:9000
-curl localhost:9000
-curl localhost:9000
-curl localhost:9000
+curl localhost:9100
+curl localhost:9100
+curl localhost:9100
+curl localhost:9100
 ```

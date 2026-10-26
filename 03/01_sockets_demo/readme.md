@@ -1,7 +1,7 @@
 # Plain text protocol
 * Run plain text server
 ```bash
-python plain_text_server.py
+uv run plain_text_server.py
 ```
 
 * Connect with telnet
@@ -13,7 +13,7 @@ telnet localhost 65432
 **Note:** This is just a partial implementation of the HTTP protocol which supports only GET method.
 * Run simple http server
 ```bash
-python simple_http.py
+uv run simple_http.py
 ```
 
 * Open browser
@@ -22,7 +22,7 @@ http://localhost:8080
 # Binary Protocol
 * Run plain text server
 ```bash
-python binary_server.py
+uv binary_server.py
 ```
 
 * Send binary data

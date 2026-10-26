@@ -1,22 +1,25 @@
-# Create python virtual environment
+# Setup
+
+This demo uses [uv](https://docs.astral.sh/uv/) to manage the Python environment and dependencies.
+
+Install uv if it is not already installed:
+
 ```bash
-python -m venv venv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-# Activate python virtual environment
-**Note: ** you must activate the environment everytime you open the project
+Create the virtual environment and install dependencies:
+
 ```bash
-source venv/bin/activate
-```
-# Install dependencies
-```bash
-pip install fastapi uvicorn websockets
+uv sync
 ```
 
 # Run application
+
 ```bash
-uvicorn main:app --reload
+uv run uvicorn main:app --reload
 ```
 
-# Open URL in browser 
+# Open URL in browser
+
 http://127.0.0.1:8000/static/index.html

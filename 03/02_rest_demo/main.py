@@ -1,16 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import Dict, List, Optional
 
 app = FastAPI()
 
 # In-memory "database"
-items_db: Dict[int, dict] = {}
+items_db: dict[int, dict] = {}
 item_id_counter = 1
 
 class Item(BaseModel):
     name: str
-    description: Optional[str] = None
+    description: str | None = None
     enabled: bool = True
 
 # Create - POST
@@ -32,7 +31,7 @@ def read_item(item_id: int):
     return item
 
 # Read all items - GET
-@app.get("/items/", response_model=List[Item])
+@app.get("/items/", response_model=list[Item])
 def read_all_items():
     return list(items_db.values())
 
